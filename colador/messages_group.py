@@ -49,11 +49,16 @@ class MessagesGroup(object):
             self.colador, self.messages + another_group.messages
         )
 
-    def __add__(self, another_group: 'MessagesGroup'):
-
-        return self.merge_with(another_group)
-
     def update_field(self, field: str, value_func):
 
         for m in self.messages:
             self.colador.update_message(m, field, value_func(m))
+
+    def __add__(self, another_group: 'MessagesGroup'):
+        return self.merge_with(another_group)
+
+    def __iter__(self):
+        return iter(self.messages)
+
+    def __len__(self):
+        return len(self.messages)
