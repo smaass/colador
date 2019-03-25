@@ -2,14 +2,14 @@ import inspect
 import json
 import os
 
-from colador.data_source.data_source import DataSource
-from colador.messages_group import MessagesGroup
-import colador.stop_words
+from data_source.data_source import DataSource
+from messages_group import MessagesGroup
+import stop_words
 
 
 class Colador(object):
 
-    STOP_WORDS_PATH = os.path.dirname(inspect.getfile(colador.stop_words))
+    STOP_WORDS_PATH = os.path.dirname(inspect.getfile(stop_words))
     STOP_WORDS_ES = frozenset(json.load(
         open(os.path.join(STOP_WORDS_PATH, 'stopwords-es.json'))
     ))

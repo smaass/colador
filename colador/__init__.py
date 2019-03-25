@@ -1,4 +1,4 @@
-from colador.colador import *
+from colador.colador import Colador
 
 __all__ = [
     'Colador'

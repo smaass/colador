@@ -3,7 +3,7 @@ import pymongo
 from bson import ObjectId
 from pymongo import MongoClient
 
-from colador.data_source.data_source import DataSource
+from data_source.data_source import DataSource
 
 
 class MongoDbSource(DataSource):
