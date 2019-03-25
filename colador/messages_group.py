@@ -46,6 +46,24 @@ class MessagesGroup(object):
         from IPython.core.display import HTML
         return HTML(embed_code)
 
+    def elbow_curve(self, feature_field: str, max_clusters: int):
+
+        distortions = []
+        features = np.array([m[feature_field] for m in self.messages])
+
+        for k in range(2, max_clusters + 1):
+            kmeans = KMeans(
+                n_clusters=k, random_state=0, n_jobs=-1
+            ).fit(features)
+            distortions.append(kmeans.inertia_)
+
+        from matplotlib import pyplot as plt
+        fig = plt.figure(figsize=(15, 5))
+        plt.plot(range(2, 26), distortions)
+        plt.grid(True)
+        plt.title('Elbow curve')
+        return fig
+
     def merge_with(self, another_group: 'MessagesGroup'):
 
         return MessagesGroup(

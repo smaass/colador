@@ -1,5 +1,6 @@
 coverage==4.5.2
 ipython==7.4.0
+matplotlib==3.0.3
 numpy==1.16.1
 pymongo==3.7.2
 scikit-learn
