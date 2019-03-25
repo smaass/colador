@@ -59,7 +59,7 @@ class MessagesGroup(object):
 
         from matplotlib import pyplot as plt
         fig = plt.figure(figsize=(15, 5))
-        plt.plot(range(2, 26), distortions)
+        plt.plot(range(2, max_clusters + 1), distortions)
         plt.grid(True)
         plt.title('Elbow curve')
         return fig
