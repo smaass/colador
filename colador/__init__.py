@@ -1,5 +1,5 @@
 from colador.colador import Colador
-from data_source.mongodb_source import MongoDbSource
+from colador.data_source.mongodb_source import MongoDbSource
 
 
 __all__ = [
