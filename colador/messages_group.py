@@ -36,9 +36,13 @@ class MessagesGroup(object):
         from word_cloud.word_cloud_generator import WordCloud
         wc = WordCloud(stopwords=self.colador.STOP_WORDS_ES)
         texts = [m[text_field] for m in self.messages]
-        embed_code = wc.get_embed_code(
-            text=texts, random_color=True, topn=top_n
-        )
+        try:
+            embed_code = wc.get_embed_code(
+                text=texts, random_color=True, topn=top_n
+            )
+        except ValueError as e:
+            embed_code = str(e)
+
         from IPython.core.display import HTML
         return HTML(embed_code)
 
