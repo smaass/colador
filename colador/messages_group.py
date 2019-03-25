@@ -1,5 +1,3 @@
-from typing import List
-
 import numpy as np
 
 from sklearn.cluster import KMeans
@@ -14,8 +12,7 @@ class MessagesGroup(object):
 
     def cluster_kmeans(
             self, feature_field: str, num_clusters: int
-    ) -> List['MessagesGroup']:
-
+    ):
         features = np.array([m[feature_field] for m in self.messages])
         kmeans = KMeans(
             n_clusters=num_clusters, random_state=0, n_jobs=-1
@@ -28,9 +25,11 @@ class MessagesGroup(object):
             clusters[cluster].append(message)
 
         clusters.sort(key=lambda c: len(c))
-        return [
+
+        from colador.clusters_group import ClustersGroup
+        return ClustersGroup([
             MessagesGroup(self.colador, cluster) for cluster in clusters
-        ]
+        ])
 
     def word_cloud(self, text_field='text', top_n=40):
 
@@ -62,3 +61,6 @@ class MessagesGroup(object):
 
     def __len__(self):
         return len(self.messages)
+
+    def __getitem__(self, item):
+        return self.messages[item]

@@ -33,3 +33,9 @@ class MessagesGroupTestCase(TestCase):
         msgs = ['a', 'b', 'c', 'd', 'e']
         group = MessagesGroup(None, msgs)
         self.assertEqual(len(msgs), len(group))
+
+    def test_indexing(self):
+
+        msgs = ['a', 'b', 'c', 'd', 'e']
+        group = MessagesGroup(None, msgs)
+        self.assertEqual(group[2], msgs[2])
