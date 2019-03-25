@@ -1,3 +1,5 @@
 from colador.colador import *
 
-__all__ = []
+__all__ = [
+    'Colador'
+]
