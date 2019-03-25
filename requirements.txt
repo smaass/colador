@@ -1,4 +1,7 @@
 coverage==4.5.2
+ipython==7.4.0
 numpy==1.16.1
 pymongo==3.7.2
+scikit-learn
 Unidecode==1.0.22
+git+ssh://git@github.com/kavgan/word_cloud.git

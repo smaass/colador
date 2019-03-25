@@ -1,5 +1,6 @@
 import numpy as np
 import pymongo
+from bson import ObjectId
 from pymongo import MongoClient
 
 from colador.data_source.data_source import DataSource
@@ -7,10 +8,14 @@ from colador.data_source.data_source import DataSource
 
 class MongoDbSource(DataSource):
 
-    def __init__(self, host='127.0.0.1', port=27017, db_name='db_name'):
+    def __init__(
+            self, host='127.0.0.1', port=27017, db_name='db_name',
+            messages_coll='message'
+    ):
 
         client = MongoClient(host, port)
         self.db = client[db_name]
+        self.messages_collection = self.db[messages_coll]
 
         self.messages = None
         self.messages_updated = False
@@ -18,10 +23,11 @@ class MongoDbSource(DataSource):
         self.vector_fields = []
 
     def set_messages_query(
-            self, query, fields_to_fetch, sort_fields, limit=None
+            self, query, fields_to_fetch, sort_fields, limit=None,
+
     ):
         self.messages_updated = False
-        self.messages_cursor = self.db.message.find(
+        self.messages_cursor = self.messages_collection.find(
             query,
             {f: 1 for f in fields_to_fetch}
         ).sort(
@@ -56,3 +62,10 @@ class MongoDbSource(DataSource):
             self.refresh_messages()
 
         return self.messages
+
+    def update_message(self, message, field, value):
+
+        return self.messages_collection.find_one_and_update(
+            {'_id': ObjectId(message['_id'])},
+            {'$set': {field: value}}
+        )
