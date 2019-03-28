@@ -23,16 +23,19 @@ class MongoDbSource(DataSource):
         self.vector_fields = []
 
     def set_messages_query(
-            self, query, fields_to_fetch, sort_fields, limit=None,
+            self, query, fields_to_fetch, sort_fields=None, limit=None,
 
     ):
         self.messages_updated = False
         self.messages_cursor = self.messages_collection.find(
             query,
             {f: 1 for f in fields_to_fetch}
-        ).sort(
-            [(f, pymongo.ASCENDING) for f in sort_fields]
         )
+
+        if sort_fields is not None:
+            self.messages_cursor = self.messages_cursor.sort(
+                [(f, pymongo.ASCENDING) for f in sort_fields]
+            )
 
         if limit is not None:
             self.messages_cursor = self.messages_cursor.limit(limit)
